@@ -9,6 +9,15 @@ public class Timer : MonoBehaviour
     private float startTime;
     public bool keepTiming;
     public float timer;
+    public GameObject player;
+    public GameObject finish;
+
+    void start() {
+        player = GameObject.Find("RobotKyle");
+
+        finish = GameObject.Find("FinishUI");
+        finish.SetActive(false);
+    }
 
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Start") {
@@ -17,6 +26,12 @@ public class Timer : MonoBehaviour
 
         if(other.gameObject.tag == "Finish") {
             StopTimer();
+            finish.SetActive(true);
+            PlayerMovement playermovement = player.GetComponent<PlayerMovement>();
+
+            playermovement.speed = 0;
+
+            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 
